@@ -52,7 +52,7 @@ function Navbar() {
 				</nav>
 
 				<form action="/jobs" className="ml-auto hidden w-full max-w-[310px] items-center rounded-full border border-slate-200 bg-slate-50 p-1 focus-within:border-blue-400 focus-within:bg-white sm:flex">
-					<label htmlFor="job-search" className="sr-only">Search jobs</label>
+					<label htmlFor="job-search" className="sr-only">Search jobs for india</label>
 					<input
 						id="job-search"
 						name="q"
@@ -71,10 +71,10 @@ function Navbar() {
 					</Link>
 					<span aria-hidden="true" className="h-6 w-px bg-slate-200" />
 					<Link to="/login" className="whitespace-nowrap text-sm font-semibold text-slate-700 hover:text-blue-600">
-						Log in
+						Logs in
 					</Link>
 					<Link to="/signup" className="whitespace-nowrap rounded-full bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-700">
-						Sign up
+						Signs up
 					</Link>
 				</div>
 
