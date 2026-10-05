@@ -112,7 +112,7 @@ function Navbar() {
 						))}
 					</nav>
 					<div className="mt-3 flex items-center gap-3 border-t border-slate-100 pt-4">
-						<Link to="#employers" onClick={() => setMenuOpen(false)} className="px-3 py-2 text-sm font-semibold text-slate-600">For employers</Link>
+						<Link to="#employers" onClick={() => setMenuOpen(false)} className="px-3 py-2 text-sm font-semibold text-slate-600">For pankaj employers</Link>
 						<Link to="/login" onClick={() => setMenuOpen(false)} className="px-3 py-2 text-sm font-semibold text-slate-700">Log in</Link>
 						<Link to="/signup" onClick={() => setMenuOpen(false)} className="ml-auto rounded-full bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white">Sign up</Link>
 					</div>
