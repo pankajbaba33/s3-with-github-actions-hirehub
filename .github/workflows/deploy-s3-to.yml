@@ -19,5 +19,4 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: "Upload files on s3"
-        run: aws s3 sync . s3://${{ secrets.S3_BUCKET_NAME
- }} --delete
+        run: aws s3 sync . s3://${{ secrets.S3_BUCKET_NAME }} --delete
