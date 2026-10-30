@@ -1,40 +1,3 @@
-# name: Deploy app on s3 bucket
-
-# on:
-#   push:
-
-# jobs:
-#   deploy:
-#     runs-on: ubuntu-latest
-
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v4
-
-#       - name: Setup Node.js
-#         uses: actions/setup-node@v4
-#         with:
-#           node-version: 24
-#           cache: npm
-
-#       - name: Install packages
-#         run: npm install
-
-#       - name: Make build
-#         run: npm run build
-
-#       - name: Configure AWS credentials
-#         uses: aws-actions/configure-aws-credentials@v6
-#         with:
-#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#           aws-region: ${{ secrets.AWS_REGION }}
-
-#       - name: Upload files on S3
-#         run: aws s3 sync ./dist s3://${{ secrets.S3_BUCKET_NAME }} --delete
-
-
-
 name: Deploy static webapp Website to EC2
 on: push
 
@@ -48,18 +11,27 @@ jobs:
     steps:
       - name: Deploy to EC2
         run: |
+          # 1. Clean and validate host
+          HOST=$(echo "$EC2_HOST" | tr -d ' "\r\n' | sed -e 's/^.*@//')
+          if [ -z "$HOST" ]; then
+            echo "Error: EC2_HOST secret is empty or not configured in GitHub Secrets!"
+            exit 1
+          fi
+
+          # 2. Setup SSH
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
           printf '%s\n' "$EC2_SSH_KEY" | tr -d '\r' > ~/.ssh/ec2.pem
           chmod 600 ~/.ssh/ec2.pem
-          ssh-keyscan -H "$EC2_HOST" >> ~/.ssh/known_hosts
+          ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts
 
-          ssh -i ~/.ssh/ec2.pem "ec2-user@$EC2_HOST" 'bash -se' <<'EOF'
+          # 3. Connect and deploy (change ec2-user to ubuntu if using Ubuntu OS)
+          ssh -i ~/.ssh/ec2.pem "ec2-user@$HOST" 'bash -se' <<'EOF'
           APP="/home/ec2-user/ec2-webapp"
           if [ -d "$APP/.git" ]; then
             cd "$APP"
-            git checkout static
-            git pull --ff-only origin static
+            git checkout main
+            git pull --ff-only origin main
           else
             git clone -b main "https://github.com/${{ github.repository }}.git" "$APP"
           fi
