@@ -49,10 +49,9 @@ export default function Login({ defaultRole }) {
     setSuccessMessage('')
 
     const candidateEndpoints = [
+      'http://13.60.249.122/api',
       import.meta.env.VITE_API_URL,
       '/api',
-      'http://127.0.0.1:5000/api',
-      'http://localhost:5000/api',
     ].filter(Boolean)
 
     try {
@@ -108,7 +107,7 @@ export default function Login({ defaultRole }) {
       // If backend network error, provide helpful guidance
       if (err.message && err.message.includes('Failed to fetch')) {
         setErrorMessage(
-          'Cannot connect to backend server at http://localhost:5000. Please ensure the backend is running (cd backend; npm run dev).'
+          'Cannot connect to backend server at http://13.60.249.122/api. Please ensure the backend is running.'
         )
       } else {
         setErrorMessage(err.message || 'Something went wrong. Please try again.')

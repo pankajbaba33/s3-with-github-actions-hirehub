@@ -55,10 +55,9 @@ export default function JobsPage() {
     if (location) params.append('location', location)
 
     const candidateEndpoints = [
+      'http://13.60.249.122/api',
       import.meta.env.VITE_API_URL,
       '/api',
-      'http://127.0.0.1:5000/api',
-      'http://localhost:5000/api',
     ].filter(Boolean)
 
     const fetchLiveJobs = async () => {
